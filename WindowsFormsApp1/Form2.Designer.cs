@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -46,14 +47,35 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.роликиBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.database1DataSet = new WindowsFormsApp1.Database1DataSet();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.зенковкиBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.зенковкиBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.database1DataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.зенковкиBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.зенковкиTableAdapter = new WindowsFormsApp1.Database1DataSetTableAdapters.ЗенковкиTableAdapter();
+            this.роликиTableAdapter = new WindowsFormsApp1.Database1DataSetTableAdapters.РоликиTableAdapter();
+            this.роликиBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.роликиBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.database1DataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.зенковкиBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.зенковкиBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.database1DataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.зенковкиBindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.роликиBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -135,7 +157,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::WindowsFormsApp1.Properties.Resources.img;
-            this.pictureBox1.Location = new System.Drawing.Point(7, 116);
+            this.pictureBox1.Location = new System.Drawing.Point(23, 108);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(300, 283);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -247,24 +269,23 @@
             this.tabPage1.Text = "Расчёт развертки";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // textBox4
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(946, 475);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Ролики";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox4.Location = new System.Drawing.Point(483, 86);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(273, 31);
+            this.textBox4.TabIndex = 19;
             // 
-            // tabPage3
+            // label9
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(946, 392);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Справочник";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label9.Location = new System.Drawing.Point(329, 92);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(132, 25);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "d трубы, мм";
             // 
             // button3
             // 
@@ -277,23 +298,95 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // label9
+            // tabPage2
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(329, 92);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(132, 25);
-            this.label9.TabIndex = 18;
-            this.label9.Text = "d трубы, мм";
+            this.tabPage2.Controls.Add(this.label10);
+            this.tabPage2.Controls.Add(this.comboBox1);
+            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(946, 475);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Оснастка";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // textBox4
+            // label10
             // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox4.Location = new System.Drawing.Point(483, 86);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(273, 31);
-            this.textBox4.TabIndex = 19;
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label10.Location = new System.Drawing.Point(86, 22);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(180, 25);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Выбор оснастки:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Зенковки",
+            "Ролики"});
+            this.comboBox1.Location = new System.Drawing.Point(272, 23);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(544, 28);
+            this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(91, 77);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(725, 369);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // роликиBindingSource
+            // 
+            this.роликиBindingSource.DataMember = "Ролики";
+            this.роликиBindingSource.DataSource = this.database1DataSet;
+            // 
+            // database1DataSet
+            // 
+            this.database1DataSet.DataSetName = "Database1DataSet";
+            this.database1DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(946, 475);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Справочник";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // зенковкиBindingSource1
+            // 
+            this.зенковкиBindingSource1.DataMember = "Зенковки";
+            // 
+            // зенковкиBindingSource
+            // 
+            this.зенковкиBindingSource.DataMember = "Зенковки";
+            // 
+            // зенковкиBindingSource2
+            // 
+            this.зенковкиBindingSource2.DataMember = "Зенковки";
+            this.зенковкиBindingSource2.DataSource = this.database1DataSet;
+            // 
+            // зенковкиTableAdapter
+            // 
+            this.зенковкиTableAdapter.ClearBeforeFill = true;
+            // 
+            // роликиTableAdapter
+            // 
+            this.роликиTableAdapter.ClearBeforeFill = true;
+            // 
+            // роликиBindingSource1
+            // 
+            this.роликиBindingSource1.DataMember = "Ролики";
+            this.роликиBindingSource1.DataSource = this.database1DataSet;
             // 
             // Form2
             // 
@@ -306,10 +399,21 @@
             this.MinimumSize = new System.Drawing.Size(561, 310);
             this.Name = "Form2";
             this.Text = "Калькулятор труб";
+            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.роликиBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.database1DataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.зенковкиBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.зенковкиBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.database1DataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.зенковкиBindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.роликиBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -338,5 +442,17 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.BindingSource зенковкиBindingSource;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.BindingSource database1DataSetBindingSource;
+        private System.Windows.Forms.BindingSource зенковкиBindingSource1;
+        private Database1DataSet database1DataSet;
+        private System.Windows.Forms.BindingSource зенковкиBindingSource2;
+        private Database1DataSetTableAdapters.ЗенковкиTableAdapter зенковкиTableAdapter;
+        private System.Windows.Forms.BindingSource роликиBindingSource;
+        private Database1DataSetTableAdapters.РоликиTableAdapter роликиTableAdapter;
+        private System.Windows.Forms.BindingSource роликиBindingSource1;
     }
 }
