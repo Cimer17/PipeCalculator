@@ -54,9 +54,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.роликиBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.database1DataSet = new WindowsFormsApp1.Database1DataSet();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.зенковкиBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.зенковкиBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.database1DataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -177,7 +177,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(590, 395);
+            this.button2.Location = new System.Drawing.Point(640, 395);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(166, 43);
             this.button2.TabIndex = 10;
@@ -292,9 +292,9 @@
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button3.Location = new System.Drawing.Point(382, 395);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(193, 43);
+            this.button3.Size = new System.Drawing.Size(242, 43);
             this.button3.TabIndex = 17;
-            this.button3.Text = "Подобрать ролики";
+            this.button3.Text = "Подобрать оснастку";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -315,7 +315,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(86, 22);
+            this.label10.Location = new System.Drawing.Point(182, 23);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(180, 25);
             this.label10.TabIndex = 2;
@@ -327,7 +327,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Зенковки",
             "Ролики"});
-            this.comboBox1.Location = new System.Drawing.Point(272, 23);
+            this.comboBox1.Location = new System.Drawing.Point(368, 23);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(544, 28);
             this.comboBox1.TabIndex = 1;
@@ -337,11 +337,19 @@
             // 
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(91, 77);
+            this.dataGridView1.Location = new System.Drawing.Point(187, 76);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(725, 369);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(946, 475);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Справочник";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // роликиBindingSource
             // 
@@ -352,15 +360,6 @@
             // 
             this.database1DataSet.DataSetName = "Database1DataSet";
             this.database1DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(946, 475);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Справочник";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // зенковкиBindingSource1
             // 

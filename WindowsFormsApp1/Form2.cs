@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,17 +17,29 @@ namespace WindowsFormsApp1
 {
     public partial class Form2 : Form
     {
+        
         public static string connectString = string.Format("Provider = Microsoft.ACE.OLEDB.12.0; Data Source= |DataDirectory|\\Database1.accdb;");
+        private OleDbConnection myConnection;
 
-        public double result = 0;
-        public List<string> radii = new List<string>();
+
+        public double result = 0; // переменная развертки роликов
+        public List<string> requiredRollers = new List<string>(); // список нужных параметров роликов для гибки
+
 
         public Form2()
         {
             InitializeComponent();
+            myConnection = new OleDbConnection(connectString); // создаем соединение и подключаемся
+            myConnection.Open();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            myConnection.Close(); // закрытие соединения при выключении программы
+        }
+
+
+        private void button1_Click(object sender, EventArgs e) // тут стоит добавить учёт допусков, оптимизировать
         {
             if (checkBox1.Checked)
             {
@@ -33,8 +47,8 @@ namespace WindowsFormsApp1
                 {
                     double R = Convert.ToDouble(textBox1.Text.Replace(".", ","));
                     result += R;
-                    label1.Text = Convert.ToString(result);
-                    label8.Text = Convert.ToString(result);
+                    label1.Text = Convert.ToString(result) + " " + "мм";
+                    label8.Text = Convert.ToString(result) + " " + "мм";
                     textBox1.Clear();
                 }
                 catch {
@@ -52,9 +66,9 @@ namespace WindowsFormsApp1
                     label1.Text = Convert.ToString(counting) + " " + "мм";
                     label8.Text = Convert.ToString(result) + " " + "мм";
                     string RollerSize = textBox4.Text + "/" + textBox1.Text;
-                    if (!radii.Contains(RollerSize))
+                    if (!requiredRollers.Contains(RollerSize))
                     {
-                        radii.Add(RollerSize);
+                        requiredRollers.Add(RollerSize);
                     }
                     textBox1.Clear();
                     textBox2.Clear();
@@ -67,7 +81,7 @@ namespace WindowsFormsApp1
         }
 
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) // проверка прямой участок или изгиб
         {
             if (checkBox1.Checked)
             {
@@ -88,27 +102,69 @@ namespace WindowsFormsApp1
             textBox1.Clear();
             textBox2.Clear();
             textBox3.Clear();
-            radii.Clear();
+            requiredRollers.Clear();
             result = 0;
             label1.Text = "result";
             label8.Text = "result";
         }
 
-        private void label8_Click(object sender, EventArgs e)
+        private void label8_Click(object sender, EventArgs e) // копирование текста развертки
         {
             Clipboard.SetText(label8.Text);
         }
 
+        private string GetRollers() // нужно считывать все нужные ролики, а не один и в случае если к параметрам нет ролика писать просто его параметры (12/12)
+        {
+            if (requiredRollers.Count != 0) { 
+                string radiiString = string.Join(", ", requiredRollers.Select(p => $"'{p}'"));
+                string query = $"SELECT Наименование FROM Ролики WHERE Параметры IN ({radiiString})";
+                OleDbCommand command = new OleDbCommand(query, myConnection);
+                object denominations = command.ExecuteScalar();
+                if (denominations != null)
+                {
+                    return denominations.ToString();
+                }
+                else
+                {
+                    return "Под такие параметры роликов нет!";
+                }
+            }
+            else
+            {
+                return "Недостаточно данных!";
+            }
+        }
+
+        private string GetСountersink(string diameter)
+        {
+            string query = $"SELECT Наименование FROM Зенковки WHERE Диаметр='{diameter}'";
+            OleDbCommand command = new OleDbCommand(query, myConnection);
+            object countersink = command.ExecuteScalar();
+            if (countersink != null)
+            {
+                return countersink.ToString();
+            }
+            else
+            {
+                return "Не найдена!";
+            }
+        }
+
+
         private void button3_Click(object sender, EventArgs e)
         {
-            string elements = "Нужные ролики для гибки данной трубы:\n" + " " + string.Join(", ", radii);
-            MessageBox.Show(elements, "Нужные ролики", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string diameter  = textBox4.Text;
+
+            if (string.IsNullOrEmpty(diameter))
+            {
+                MessageBox.Show("Введите значение диаметра");
+                return;
+            }
+            var countersink = GetСountersink(diameter);
+            var rollers = GetRollers();
+            MessageBox.Show($"Зенковка: {countersink}\nРолики: {rollers}");
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -118,6 +174,8 @@ namespace WindowsFormsApp1
             this.зенковкиTableAdapter.Fill(this.database1DataSet.Зенковки);
 
         }
+        
+        
         public DataTable dataTable;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -150,6 +208,8 @@ namespace WindowsFormsApp1
 
             return dataTable;
         }
+
+
         private void UpdateDataGridView(DataTable dataTable)
         {
             dataGridView1.DataSource = dataTable;
