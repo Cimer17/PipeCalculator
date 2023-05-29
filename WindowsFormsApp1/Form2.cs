@@ -212,7 +212,7 @@ namespace WindowsFormsApp1
 
         private void UpdateDataGridView(DataTable dataTable)
         {
-            dataGridView1.DataSource = dataTable;
+            dataGridView1.DataSource = dataTable; // test
         }
     }
 }
