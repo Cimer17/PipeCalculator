@@ -189,7 +189,7 @@ namespace WindowsFormsApp1
                     dataTable = LoadDataFromTable("Ролики");
                     break;
             }
-            dataGridView1.DataSource = dataTable;
+            dataGridView1.DataSource = dataTable;//тоже самое
         }
         
         private DataTable LoadDataFromTable(string tableName)
