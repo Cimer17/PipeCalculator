@@ -189,7 +189,7 @@ namespace WindowsFormsApp1
                     dataTable = LoadDataFromTable("Ролики");
                     break;
             }
-            UpdateDataGridView(dataTable);
+            dataGridView1.DataSource = dataTable;//тоже самое //
         }
         
         private DataTable LoadDataFromTable(string tableName)
@@ -207,12 +207,6 @@ namespace WindowsFormsApp1
             }
 
             return dataTable;
-        }
-
-
-        private void UpdateDataGridView(DataTable dataTable)
-        {
-            dataGridView1.DataSource = dataTable;
         }
     }
 }
