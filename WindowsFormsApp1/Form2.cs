@@ -38,6 +38,19 @@ namespace WindowsFormsApp1
             myConnection.Close(); // закрытие соединения при выключении программы
         }
 
+        private void directCount(double sectionlength) // функция подсчёта прямого участка
+        {
+            result += sectionlength;
+            label1.Text = Convert.ToString(result) + " " + "мм";
+            label8.Text = Convert.ToString(result) + " " + "мм";
+            textBox1.Clear();
+        }
+
+        private void curvedSection() // функция подсчёта кривых
+        {
+
+        }
+
 
         private void button1_Click(object sender, EventArgs e) // тут стоит добавить учёт допусков, оптимизировать
         {
@@ -46,10 +59,7 @@ namespace WindowsFormsApp1
                 try
                 {
                     double R = Convert.ToDouble(textBox1.Text.Replace(".", ","));
-                    result += R;
-                    label1.Text = Convert.ToString(result) + " " + "мм";
-                    label8.Text = Convert.ToString(result) + " " + "мм";
-                    textBox1.Clear();
+                    directCount(R);
                 }
                 catch {
                     MessageBox.Show("Введите кооректные значения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -118,8 +128,10 @@ namespace WindowsFormsApp1
             if (requiredRollers.Count != 0) { 
                 string radiiString = string.Join(", ", requiredRollers.Select(p => $"'{p}'"));
                 string query = $"SELECT Наименование FROM Ролики WHERE Параметры IN ({radiiString})";
+                
                 OleDbCommand command = new OleDbCommand(query, myConnection);
                 object denominations = command.ExecuteScalar();
+                
                 if (denominations != null)
                 {
                     return denominations.ToString();
@@ -205,7 +217,6 @@ namespace WindowsFormsApp1
                     adapter.Fill(dataTable);
                 }
             }
-
             return dataTable;
         }
     }
