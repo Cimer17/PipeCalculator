@@ -64,6 +64,8 @@
             this.зенковкиTableAdapter = new WindowsFormsApp1.Database1DataSetTableAdapters.ЗенковкиTableAdapter();
             this.роликиTableAdapter = new WindowsFormsApp1.Database1DataSetTableAdapters.РоликиTableAdapter();
             this.роликиBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -300,6 +302,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.saveButton);
+            this.tabPage2.Controls.Add(this.deleteButton);
             this.tabPage2.Controls.Add(this.label10);
             this.tabPage2.Controls.Add(this.comboBox1);
             this.tabPage2.Controls.Add(this.dataGridView1);
@@ -387,6 +391,25 @@
             this.роликиBindingSource1.DataMember = "Ролики";
             this.роликиBindingSource1.DataSource = this.database1DataSet;
             // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(23, 153);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(119, 52);
+            this.deleteButton.TabIndex = 3;
+            this.deleteButton.Text = "Удалить\r\nзапись";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(23, 76);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(119, 52);
+            this.saveButton.TabIndex = 4;
+            this.saveButton.Text = "Добавить\r\n";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -453,5 +476,7 @@
         private System.Windows.Forms.BindingSource роликиBindingSource;
         private Database1DataSetTableAdapters.РоликиTableAdapter роликиTableAdapter;
         private System.Windows.Forms.BindingSource роликиBindingSource1;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button deleteButton;
     }
 }
