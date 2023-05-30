@@ -12,6 +12,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Database1DataSetTableAdapters;
 
 namespace WindowsFormsApp1
 {
@@ -173,9 +174,42 @@ namespace WindowsFormsApp1
             // TODO: This line of code loads data into the 'database1DataSet.Зенковки' table. You can move, or remove it, as needed.
             this.зенковкиTableAdapter.Fill(this.database1DataSet.Зенковки);
 
+            dataGridView1.DataSource = зенковкиBindingSource;
+            dataGridView1.DataError += new DataGridViewDataErrorEventHandler(dataGridView1_DataError);
+
         }
-        
-        
+
+        void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // you can obtain current editing value like this:
+            string value = null;
+            var ctl = dataGridView1.EditingControl as DataGridViewTextBoxEditingControl;
+
+            if (ctl != null)
+                value = ctl.Text;
+
+            // you can obtain the current commited value
+            object current = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            string message;
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    // bound to integer field
+                    message = "the value should be a number";
+                    break;
+                case 1:
+                    // bound to date time field
+                    message = "the value should be in date time format yyyy/MM/dd hh:mm:ss";
+                    break;
+                // other columns
+                default:
+                    message = "Invalid data";
+                    break;
+            }
+
+            MessageBox.Show(message);
+        }
+
         public DataTable dataTable;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -189,7 +223,7 @@ namespace WindowsFormsApp1
                     dataTable = LoadDataFromTable("Ролики");
                     break;
             }
-            dataGridView1.DataSource = dataTable;//тоже самое //
+            dataGridView1.DataSource = dataTable;
         }
         
         private DataTable LoadDataFromTable(string tableName)
@@ -208,5 +242,26 @@ namespace WindowsFormsApp1
 
             return dataTable;
         }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex != -1)
+            {
+                if (comboBox1.SelectedIndex == 0) MessageBox.Show("zen");
+                if (comboBox1.SelectedIndex == 1) MessageBox.Show("rol");
+                //int selectedTable = comboBox1.SelectedIndex;
+                //switch (selectedTable)
+                //{
+                //    case "Зенковки":
+                //        this.роликиTableAdapter.Update(this.database1DataSet.Ролики);
+                //        break;
+                //    case "Ролики":
+                //        this.зенковкиTableAdapter.Update(this.database1DataSet.Зенковки);
+                //        break;
+                //}
+            }
+            if (comboBox1.SelectedIndex == -1) MessageBox.Show("eror");
+        }
+
     }
 }
