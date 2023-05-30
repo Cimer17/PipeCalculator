@@ -51,6 +51,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.deleteButton = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -64,8 +66,6 @@
             this.зенковкиTableAdapter = new WindowsFormsApp1.Database1DataSetTableAdapters.ЗенковкиTableAdapter();
             this.роликиTableAdapter = new WindowsFormsApp1.Database1DataSetTableAdapters.РоликиTableAdapter();
             this.роликиBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.deleteButton = new System.Windows.Forms.Button();
-            this.saveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -240,7 +240,7 @@
             this.tabControl1.Location = new System.Drawing.Point(1, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(954, 508);
+            this.tabControl1.Size = new System.Drawing.Size(954, 556);
             this.tabControl1.TabIndex = 17;
             // 
             // tabPage1
@@ -310,10 +310,30 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(946, 475);
+            this.tabPage2.Size = new System.Drawing.Size(946, 523);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Оснастка";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(23, 76);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(119, 52);
+            this.saveButton.TabIndex = 4;
+            this.saveButton.Text = "Добавить\r\n";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(23, 153);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(119, 52);
+            this.deleteButton.TabIndex = 3;
+            this.deleteButton.Text = "Удалить\r\nзапись";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // label10
             // 
@@ -343,6 +363,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(187, 76);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(725, 369);
             this.dataGridView1.TabIndex = 0;
             // 
@@ -391,30 +412,11 @@
             this.роликиBindingSource1.DataMember = "Ролики";
             this.роликиBindingSource1.DataSource = this.database1DataSet;
             // 
-            // deleteButton
-            // 
-            this.deleteButton.Location = new System.Drawing.Point(23, 153);
-            this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(119, 52);
-            this.deleteButton.TabIndex = 3;
-            this.deleteButton.Text = "Удалить\r\nзапись";
-            this.deleteButton.UseVisualStyleBackColor = true;
-            // 
-            // saveButton
-            // 
-            this.saveButton.Location = new System.Drawing.Point(23, 76);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(119, 52);
-            this.saveButton.TabIndex = 4;
-            this.saveButton.Text = "Добавить\r\n";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(949, 502);
+            this.ClientSize = new System.Drawing.Size(949, 558);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
