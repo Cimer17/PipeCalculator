@@ -18,7 +18,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form2 : Form
     {
-        
+
         public static string connectString = string.Format("Provider = Microsoft.ACE.OLEDB.12.0; Data Source= |DataDirectory|\\Database1.accdb;");
         private OleDbConnection myConnection;
 
@@ -26,7 +26,7 @@ namespace WindowsFormsApp1
         public double result = 0; // переменная развертки роликов
         public double tolerance = 0; // переменная подсчета допуска
         public List<string> requiredRollers = new List<string>(); // список нужных параметров роликов для гибки
-        
+
 
         public Form2()
         {
@@ -42,10 +42,10 @@ namespace WindowsFormsApp1
 
         public List<double> ExtractNumber(string input) // разбитие числа на число и  допуск
         {
-            
+
             List<double> numbers = new List<double>();
             int index = input.IndexOf('±');
-            
+
             if (index != -1)
             {
                 string numberString = input.Substring(index + 1);
@@ -58,9 +58,9 @@ namespace WindowsFormsApp1
                 numbers.Add(Twototal);
                 return numbers;
             }
-            
+
             double total = Convert.ToDouble(input.Replace(".", ","));
-            
+
             numbers.Add(total);
             return numbers;
         }
@@ -68,28 +68,29 @@ namespace WindowsFormsApp1
 
         private void directCount() // функция подсчёта прямого участка
         {
-            try {
+            try
+            {
 
                 List<double> numbers = ExtractNumber(textBox1.Text.Replace(" ", string.Empty));
                 double total = numbers[0];
                 double tolTotal = 0;
-                
+
                 if (numbers.Count == 2)
                 {
                     tolTotal = numbers[1];
                 }
-                
+
                 result += total;
                 tolerance += tolTotal;
                 label1.Text = Convert.ToString(total) + " " + "мм" + " ± " + Convert.ToString(tolTotal) + " мм";
                 label8.Text = Convert.ToString(result) + " " + "мм" + " ± " + Convert.ToString(tolerance) + " мм";
                 textBox1.Clear();
             }
-             catch
+            catch
             {
                 MessageBox.Show("Введите кооректные значения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-       }
+        }
 
 
         private void curvedSection() // функция подсчёта кривых
@@ -115,7 +116,7 @@ namespace WindowsFormsApp1
                 label1.Text = Convert.ToString(total) + " " + "мм" + " ± " + Convert.ToString(tolTotal) + " мм";
                 label8.Text = Convert.ToString(result) + " " + "мм" + " ± " + Convert.ToString(tolerance) + " мм";
                 string RollerSize = textBox4.Text + "/" + textBox1.Text;
-                
+
                 if (!requiredRollers.Contains(RollerSize))
                 {
                     requiredRollers.Add(RollerSize);
@@ -124,7 +125,7 @@ namespace WindowsFormsApp1
                 textBox2.Clear();
                 textBox3.Clear();
             }
-                
+
             catch
             {
                 MessageBox.Show("Введите кооректные значения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -139,7 +140,8 @@ namespace WindowsFormsApp1
                 directCount();
 
             }
-            else {
+            else
+            {
                 curvedSection();
             }
         }
@@ -179,13 +181,14 @@ namespace WindowsFormsApp1
 
         private string GetRollers() // нужно считывать все нужные ролики, а не один и в случае если к параметрам нет ролика писать просто его параметры (12/12)
         {
-            if (requiredRollers.Count != 0) { 
+            if (requiredRollers.Count != 0)
+            {
                 string radiiString = string.Join(", ", requiredRollers.Select(p => $"'{p}'"));
                 string query = $"SELECT Наименование FROM Ролики WHERE Параметры IN ({radiiString})";
-                
+
                 OleDbCommand command = new OleDbCommand(query, myConnection);
                 object denominations = command.ExecuteScalar();
-                
+
                 if (denominations != null)
                 {
                     return denominations.ToString();
@@ -219,7 +222,7 @@ namespace WindowsFormsApp1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string diameter  = textBox4.Text;
+            string diameter = textBox4.Text;
 
             if (string.IsNullOrEmpty(diameter))
             {
@@ -264,7 +267,7 @@ namespace WindowsFormsApp1
                 dataGridView1.DataSource = dataTable;
             }
         }
-        
+
         private DataTable LoadDataFromTable(string tableName)
         {
             DataTable dataTable = new DataTable();
@@ -292,7 +295,7 @@ namespace WindowsFormsApp1
         {
             if (comboBox1.SelectedIndex != -1)
             {
-                DialogResult dialogResult = 
+                DialogResult dialogResult =
                     MessageBox.Show("Вы действительно хотите удалить выбранные записи?",
                 "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult == DialogResult.Yes)
@@ -309,7 +312,7 @@ namespace WindowsFormsApp1
                     }
                 }
             }
-            else MessageBox.Show("Чтобы удалить запись выберите остнастку.", 
+            else MessageBox.Show("Чтобы удалить запись выберите остнастку.",
                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -361,3 +364,5 @@ namespace WindowsFormsApp1
                 }
             }
         }
+    }
+}
