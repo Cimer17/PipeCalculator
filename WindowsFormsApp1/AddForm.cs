@@ -32,41 +32,48 @@ namespace WindowsFormsApp1
         {
             
         }
-        
+
         private void FunkAdd(string osnastka)
         {
             myConnection = new OleDbConnection(connectString);
 
             myConnection.Open();
 
-
-            DataTable schemaTable = myConnection.GetSchema("Columns");
-            DataRow[] rows = schemaTable.Select($"TABLE_NAME = '{osnastka}'");
-
-            List<string> columnNames = new List<string>();
-
-            foreach (DataRow row in rows)
+            string sqlQuery = $"SELECT TOP 1 * FROM [{osnastka}]";
+            using (OleDbCommand command = new OleDbCommand(sqlQuery, myConnection))
             {
-                string columnName = row["COLUMN_NAME"].ToString();
-                columnNames.Add(columnName);
+                using (OleDbDataReader reader = command.ExecuteReader())
+                {
+                    DataTable schemaTable = reader.GetSchemaTable();
+
+                    if (schemaTable != null)
+                    {
+                        List<string> columnNames = new List<string>();
+
+                        foreach (DataRow row in schemaTable.Rows)
+                        {
+                            string columnName = row["ColumnName"].ToString();
+                            columnNames.Add(columnName);
+                        }
+                        OleDbCommand commander = new OleDbCommand();
+                        commander.Connection = myConnection;
+
+                        commander.CommandText = $"Insert into [{osnastka}] ({columnNames[1]}, {columnNames[2]}) values (@naimenovanie, @diametr)";
+                        commander.Parameters.AddWithValue("@naimenovanie", textBox1.Text);
+                        commander.Parameters.AddWithValue("@diametr", textBox2.Text);
+
+                        commander.ExecuteNonQuery();
+                        columnNames.Clear();
+
+                    }
+                }
             }
-
-            
-            OleDbCommand commander = new OleDbCommand();
-            commander.Connection = myConnection;
-
-            commander.CommandText = $"Insert into [{osnastka}] ({columnNames[1]}, {columnNames[2]}) values (@naimenovanie, @diametr)";
-            commander.Parameters.AddWithValue("@naimenovanie", textBox1.Text);
-            commander.Parameters.AddWithValue("@diametr", textBox2.Text);
-
-            commander.ExecuteNonQuery();
-
-            columnNames.Clear();
             myConnection.Close();
 
             textBox1.Clear();
             textBox2.Clear();
         }
+
         private void button2_Click(object sender, EventArgs e)
         {
             if(comboBoxAdd.SelectedIndex != -1)

@@ -179,8 +179,8 @@ namespace WindowsFormsApp1
             Clipboard.SetText(label8.Text);
         }
 
-
-        private string GetRollers()
+        List<string> newRequiredRollersList = new List<string>();
+        private string GetRollers() // нужно считывать все нужные ролики, а не один и в случае если к параметрам нет ролика писать просто его параметры (12/12)
         {
             if (requiredRollers.Count == 0)
             {
@@ -198,19 +198,54 @@ namespace WindowsFormsApp1
                 denominations.Add(denomination);
             }
 
-            reader.Close();
-            if (denominations.Count > 0)
-            {
-                return string.Join(", ", denominations);
-            }
-            else
-            {
-                return "Под такие параметры роликов нет!";
-            }
+                string newDenominations = Convert.ToString(denominations);
+
+                Perebor();
+
+                foreach (string sTemp in newRequiredRollersList)
+                {
+                    requiredRollers.Remove(sTemp);
+                }
+
+                foreach(string sTemp in requiredRollers)
+                {
+                    newDenominations += $", {sTemp}";
+                }
+
+                if (newDenominations != null)
+                {
+                    return newDenominations;
+                }
+                else
+                {
+                    return "Под такие параметры роликов нет!";
+                }
         }
 
+        private void Perebor()
+        {
+            myConnection = new OleDbConnection(connectString);
+            myConnection.Open();
 
+            string sqlQuery = $"SELECT [Параметры] FROM [Ролики]";
 
+            using (OleDbCommand command = new OleDbCommand(sqlQuery, myConnection))
+            {
+                using (OleDbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string columnValue = reader.GetValue(0).ToString();
+                            newRequiredRollersList.Add(columnValue);
+                        }
+                    }
+                }
+            }
+            myConnection.Close();
+        }
+        
         private string GetСountersink(string diameter)
         {
             string query = $"SELECT Наименование FROM Зенковки WHERE Диаметр='{diameter}'";
