@@ -101,6 +101,7 @@
             this.textBox1.Size = new System.Drawing.Size(273, 31);
             this.textBox1.TabIndex = 1;
             this.toolTip1.SetToolTip(this.textBox1, "Для указания допуска используйте ±");
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox2
             // 

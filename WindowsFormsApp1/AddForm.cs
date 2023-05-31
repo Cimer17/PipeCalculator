@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
+
 
 namespace WindowsFormsApp1
 {
@@ -67,8 +69,11 @@ namespace WindowsFormsApp1
         {
             if(comboBoxAdd.SelectedIndex != -1)
             {
-                if ((textBox1.Text == "" && textBox2.Text == "")|| 
-                    (textBox1.Text == ""|| textBox2.Text == ""))
+                string txt1 = textBox1.Text.Replace(" ", string.Empty);
+                string txt2 = textBox2.Text.Replace(" ", string.Empty);
+                
+                if ((txt1 == "" && txt2 == "")|| 
+                    (txt1 == ""|| txt2 == ""))
                 {
                     MessageBox.Show("Заполните пустые поля.",
                          "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -91,21 +96,18 @@ namespace WindowsFormsApp1
                  "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
+
         private void comboBoxAdd_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxAdd.SelectedIndex)
             {
                 case 0:
-                    {
                         label1.Text = "Наименование";
                         label2.Text = "Диаметр";
-                    }
                     break;
                 case 1:
-                    {
                         label1.Text = "Наименование";
                         label2.Text = "Параметры";
-                    }
                     break;
             }
         }
