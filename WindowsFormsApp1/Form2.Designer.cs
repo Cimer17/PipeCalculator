@@ -66,7 +66,9 @@
             this.зенковкиTableAdapter = new WindowsFormsApp1.Database1DataSetTableAdapters.ЗенковкиTableAdapter();
             this.роликиTableAdapter = new WindowsFormsApp1.Database1DataSetTableAdapters.РоликиTableAdapter();
             this.роликиBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -243,7 +245,7 @@
             this.tabControl1.Location = new System.Drawing.Point(1, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(954, 508);
+            this.tabControl1.Size = new System.Drawing.Size(954, 556);
             this.tabControl1.TabIndex = 17;
             // 
             // tabPage1
@@ -314,7 +316,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(946, 475);
+            this.tabPage2.Size = new System.Drawing.Size(946, 523);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Оснастка";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -337,6 +339,9 @@
             this.deleteButton.TabIndex = 3;
             this.deleteButton.Text = "Удалить\r\nзапись";
             this.deleteButton.UseVisualStyleBackColor = true;
+            
+          this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+
             // 
             // label10
             // 
@@ -366,6 +371,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(187, 76);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(725, 369);
             this.dataGridView1.TabIndex = 0;
             // 
@@ -418,6 +424,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
             this.ClientSize = new System.Drawing.Size(949, 491);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
