@@ -39,6 +39,7 @@ namespace WindowsFormsApp1
 
             myConnection.Open();
 
+
             DataTable schemaTable = myConnection.GetSchema("Columns");
             DataRow[] rows = schemaTable.Select($"TABLE_NAME = '{osnastka}'");
 
@@ -50,6 +51,7 @@ namespace WindowsFormsApp1
                 columnNames.Add(columnName);
             }
 
+            
             OleDbCommand commander = new OleDbCommand();
             commander.Connection = myConnection;
 

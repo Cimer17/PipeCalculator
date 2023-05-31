@@ -179,30 +179,37 @@ namespace WindowsFormsApp1
             Clipboard.SetText(label8.Text);
         }
 
-        private string GetRollers() // нужно считывать все нужные ролики, а не один и в случае если к параметрам нет ролика писать просто его параметры (12/12)
+
+        private string GetRollers()
         {
-            if (requiredRollers.Count != 0)
-            {
-                string radiiString = string.Join(", ", requiredRollers.Select(p => $"'{p}'"));
-                string query = $"SELECT Наименование FROM Ролики WHERE Параметры IN ({radiiString})";
-
-                OleDbCommand command = new OleDbCommand(query, myConnection);
-                object denominations = command.ExecuteScalar();
-
-                if (denominations != null)
-                {
-                    return denominations.ToString();
-                }
-                else
-                {
-                    return "Под такие параметры роликов нет!";
-                }
-            }
-            else
+            if (requiredRollers.Count == 0)
             {
                 return "Недостаточно данных!";
             }
+            string radiiString = string.Join(", ", requiredRollers.Select(p => $"'{p}'"));
+            string query = $"SELECT Наименование FROM Ролики WHERE Параметры IN ({radiiString})";
+            OleDbCommand command = new OleDbCommand(query, myConnection);
+            OleDbDataReader reader = command.ExecuteReader();
+            List<string> denominations = new List<string>();
+            
+            while (reader.Read())
+            {
+                string denomination = reader["Наименование"].ToString();
+                denominations.Add(denomination);
+            }
+
+            reader.Close();
+            if (denominations.Count > 0)
+            {
+                return string.Join(", ", denominations);
+            }
+            else
+            {
+                return "Под такие параметры роликов нет!";
+            }
         }
+
+
 
         private string GetСountersink(string diameter)
         {
