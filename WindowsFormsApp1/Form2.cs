@@ -179,6 +179,7 @@ namespace WindowsFormsApp1
             Clipboard.SetText(label8.Text);
         }
 
+        List<string> newRequiredRollersList = new List<string>();
         private string GetRollers() // нужно считывать все нужные ролики, а не один и в случае если к параметрам нет ролика писать просто его параметры (12/12)
         {
             if (requiredRollers.Count != 0)
@@ -189,9 +190,23 @@ namespace WindowsFormsApp1
                 OleDbCommand command = new OleDbCommand(query, myConnection);
                 object denominations = command.ExecuteScalar();
 
-                if (denominations != null)
+                string newDenominations = Convert.ToString(denominations);
+
+                Perebor();
+
+                foreach (string sTemp in newRequiredRollersList)
                 {
-                    return denominations.ToString();
+                    requiredRollers.Remove(sTemp);
+                }
+
+                foreach(string sTemp in requiredRollers)
+                {
+                    newDenominations += $", {sTemp}";
+                }
+
+                if (newDenominations != null)
+                {
+                    return newDenominations;
                 }
                 else
                 {
@@ -203,6 +218,31 @@ namespace WindowsFormsApp1
                 return "Недостаточно данных!";
             }
         }
+
+        private void Perebor()
+        {
+            myConnection = new OleDbConnection(connectString);
+            myConnection.Open();
+
+            string sqlQuery = $"SELECT [Параметры] FROM [Ролики]";
+
+            using (OleDbCommand command = new OleDbCommand(sqlQuery, myConnection))
+            {
+                using (OleDbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string columnValue = reader.GetValue(0).ToString();
+                            newRequiredRollersList.Add(columnValue);
+                        }
+                    }
+                }
+            }
+            myConnection.Close();
+        }
+
 
         private string GetСountersink(string diameter)
         {
