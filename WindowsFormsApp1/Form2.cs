@@ -182,13 +182,21 @@ namespace WindowsFormsApp1
         List<string> newRequiredRollersList = new List<string>();
         private string GetRollers() // нужно считывать все нужные ролики, а не один и в случае если к параметрам нет ролика писать просто его параметры (12/12)
         {
-            if (requiredRollers.Count != 0)
+            if (requiredRollers.Count == 0)
             {
-                string radiiString = string.Join(", ", requiredRollers.Select(p => $"'{p}'"));
-                string query = $"SELECT Наименование FROM Ролики WHERE Параметры IN ({radiiString})";
-
-                OleDbCommand command = new OleDbCommand(query, myConnection);
-                object denominations = command.ExecuteScalar();
+                return "Недостаточно данных!";
+            }
+            string radiiString = string.Join(", ", requiredRollers.Select(p => $"'{p}'"));
+            string query = $"SELECT Наименование FROM Ролики WHERE Параметры IN ({radiiString})";
+            OleDbCommand command = new OleDbCommand(query, myConnection);
+            OleDbDataReader reader = command.ExecuteReader();
+            List<string> denominations = new List<string>();
+            
+            while (reader.Read())
+            {
+                string denomination = reader["Наименование"].ToString();
+                denominations.Add(denomination);
+            }
 
                 string newDenominations = Convert.ToString(denominations);
 
@@ -212,11 +220,6 @@ namespace WindowsFormsApp1
                 {
                     return "Под такие параметры роликов нет!";
                 }
-            }
-            else
-            {
-                return "Недостаточно данных!";
-            }
         }
 
         private void Perebor()
@@ -242,8 +245,7 @@ namespace WindowsFormsApp1
             }
             myConnection.Close();
         }
-
-
+        
         private string GetСountersink(string diameter)
         {
             string query = $"SELECT Наименование FROM Зенковки WHERE Диаметр='{diameter}'";

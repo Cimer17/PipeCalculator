@@ -40,7 +40,6 @@ namespace WindowsFormsApp1
             myConnection.Open();
 
             string sqlQuery = $"SELECT TOP 1 * FROM [{osnastka}]";
-
             using (OleDbCommand command = new OleDbCommand(sqlQuery, myConnection))
             {
                 using (OleDbDataReader reader = command.ExecuteReader())
