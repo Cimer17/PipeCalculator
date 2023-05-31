@@ -24,8 +24,9 @@ namespace WindowsFormsApp1
 
 
         public double result = 0; // переменная развертки роликов
+        public double tolerance = 0; // переменная подсчета допуска
         public List<string> requiredRollers = new List<string>(); // список нужных параметров роликов для гибки
-
+        
 
         public Form2()
         {
@@ -39,55 +40,107 @@ namespace WindowsFormsApp1
             myConnection.Close(); // закрытие соединения при выключении программы
         }
 
-        private void directCount(double sectionlength) // функция подсчёта прямого участка
+        public List<double> ExtractNumber(string input) // разбитие числа на число и  допуск
         {
-            result += sectionlength;
-            label1.Text = Convert.ToString(result) + " " + "мм";
-            label8.Text = Convert.ToString(result) + " " + "мм";
-            textBox1.Clear();
+            
+            List<double> numbers = new List<double>();
+            int index = input.IndexOf('±');
+            
+            if (index != -1)
+            {
+                string numberString = input.Substring(index + 1);
+                string numberOne = input.Substring(0, index);
+
+                double Onetotal = Convert.ToDouble(numberOne.Replace(".", ","));
+                double Twototal = Convert.ToDouble(numberString.Replace(".", ","));
+
+                numbers.Add(Onetotal);
+                numbers.Add(Twototal);
+                return numbers;
+            }
+            
+            double total = Convert.ToDouble(input.Replace(".", ","));
+            
+            numbers.Add(total);
+            return numbers;
         }
+
+
+        private void directCount() // функция подсчёта прямого участка
+        {
+            try {
+
+                List<double> numbers = ExtractNumber(textBox1.Text.Replace(" ", string.Empty));
+                double total = numbers[0];
+                double tolTotal = 0;
+                
+                if (numbers.Count == 2)
+                {
+                    tolTotal = numbers[1];
+                }
+                
+                result += total;
+                tolerance += tolTotal;
+                label1.Text = Convert.ToString(total) + " " + "мм" + " ± " + Convert.ToString(tolTotal) + " мм";
+                label8.Text = Convert.ToString(result) + " " + "мм" + " ± " + Convert.ToString(tolerance) + " мм";
+                textBox1.Clear();
+            }
+             catch
+            {
+                MessageBox.Show("Введите кооректные значения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+       }
+
 
         private void curvedSection() // функция подсчёта кривых
         {
-
+            try
+            {
+                List<double> numbersR = ExtractNumber(textBox1.Text.Replace(" ", string.Empty));
+                List<double> numbersCorner = ExtractNumber(textBox2.Text.Replace(" ", string.Empty));
+                double tolTotal = 0;
+                double R = numbersR[0];
+                double Corner = numbersCorner[0];
+                if (numbersR.Count == 2)
+                {
+                    tolTotal += numbersR[1];
+                }
+                if (numbersCorner.Count == 2)
+                {
+                    tolTotal += numbersCorner[1];
+                }
+                double count_R = Convert.ToDouble(textBox3.Text.Replace(".", ","));
+                double total = (Math.Round((2 * Math.PI * numbersR[0] * numbersCorner[0]) / 360)) * count_R;
+                result += total;
+                label1.Text = Convert.ToString(total) + " " + "мм" + " ± " + Convert.ToString(tolTotal) + " мм";
+                label8.Text = Convert.ToString(result) + " " + "мм" + " ± " + Convert.ToString(tolerance) + " мм";
+                string RollerSize = textBox4.Text + "/" + textBox1.Text;
+                
+                if (!requiredRollers.Contains(RollerSize))
+                {
+                    requiredRollers.Add(RollerSize);
+                }
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+            }
+                
+            catch
+            {
+                MessageBox.Show("Введите кооректные значения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
-        private void button1_Click(object sender, EventArgs e) // тут стоит добавить учёт допусков, оптимизировать
+        private void button1_Click(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
             {
-                try
-                {
-                    double R = Convert.ToDouble(textBox1.Text.Replace(".", ","));
-                    directCount(R);
-                }
-                catch {
-                    MessageBox.Show("Введите кооректные значения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                directCount();
+
             }
             else {
-                try
-                {
-                    double R = Convert.ToDouble(textBox1.Text.Replace(".", ","));
-                    double corner = Convert.ToDouble(textBox2.Text.Replace(".", ","));
-                    double count_R = Convert.ToDouble(textBox3.Text.Replace(".", ","));
-                    double counting = (Math.Round((2 * Math.PI * R * corner) / 360)) * count_R;
-                    result += counting;
-                    label1.Text = Convert.ToString(counting) + " " + "мм";
-                    label8.Text = Convert.ToString(result) + " " + "мм";
-                    string RollerSize = textBox4.Text + "/" + textBox1.Text;
-                    if (!requiredRollers.Contains(RollerSize))
-                    {
-                        requiredRollers.Add(RollerSize);
-                    }
-                    textBox1.Clear();
-                    textBox2.Clear();
-                    textBox3.Clear();
-                }
-                catch {
-                    MessageBox.Show("Введите кооректные значения", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                curvedSection();
             }
         }
 
@@ -96,7 +149,7 @@ namespace WindowsFormsApp1
         {
             if (checkBox1.Checked)
             {
-                label3.Text = "L участка";
+                label3.Text = "L участка, мм";
                 textBox2.Enabled = false;
                 textBox3.Enabled = false;
             }
@@ -260,6 +313,7 @@ namespace WindowsFormsApp1
                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+
         //функция удаления записей в разных таблицах, в зависимости от ее выбора, методом выделения
         private void LoadDataDeleteTable(string tableNameOsnast)
         {
@@ -307,5 +361,3 @@ namespace WindowsFormsApp1
                 }
             }
         }
-    }
-}
